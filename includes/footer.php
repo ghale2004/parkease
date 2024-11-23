@@ -19,6 +19,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
+  height: 150px;
 }
 
 .footer-section h3 {
@@ -82,7 +83,7 @@
             <div class="footer-section">
                 <h3>Contact Us</h3>
                 <p>Email: info@parkease.com.np</p>
-                <p>Phone: +977-1-4XXXXXX</p>
+                <p>Phone: +977-9827110969</p>
                 <p>Address: Kathmandu, Nepal</p>
             </div>
         </div>

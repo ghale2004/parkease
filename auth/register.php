@@ -17,14 +17,14 @@ try {
     $database = new Database();
     $db = $database->getConnection();
     
-    // Validate and sanitize input
-    $name = filter_var($data['name'], FILTER_SANITIZE_STRING);
+    // Changed 'name' to 'user_name' here
+    $user_name = filter_var($data['name'], FILTER_SANITIZE_STRING);
     $email = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
     $phone = filter_var($data['phone'], FILTER_SANITIZE_STRING);
     $password = password_hash($data['password'], PASSWORD_DEFAULT);
     
-    // Validate inputs
-    if (empty($name) || empty($email) || empty($phone)) {
+    // Update validation to use user_name
+    if (empty($user_name) || empty($email) || empty($phone)) {
         throw new Exception('All fields are required');
     }
 
@@ -37,9 +37,9 @@ try {
         exit;
     }
     
-    // Insert new user
-    $stmt = $db->prepare("INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)");
-    if ($stmt->execute([$name, $email, $phone, $password])) {
+    // Changed 'name' to 'user_name' in the INSERT query
+    $stmt = $db->prepare("INSERT INTO users (user_name, email, phone, password) VALUES (?, ?, ?, ?)");
+    if ($stmt->execute([$user_name, $email, $phone, $password])) {
         $response['success'] = true;
         $response['message'] = 'Registration successful';
     } else {

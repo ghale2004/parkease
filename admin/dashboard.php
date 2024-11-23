@@ -215,9 +215,10 @@ $bookingCount = $bookingStmt->fetch(PDO::FETCH_ASSOC)['booking_count'];
                 <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                 <a href="manage-users.php"><i class="fas fa-users"></i> Users</a>
                 <a href="manage-parking.php"><i class="fas fa-parking"></i> Parking</a>
-                <a href="profile.php"><i class="fas fa-user-circle"></i> Profile</a>
+                <!-- <a href="profile.php"><i class="fas fa-user-circle"></i> Profile</a> -->
                 <a href="logout.php" class="admin-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </div>
+                <!-- <a href="<?php echo dirname($_SERVER['PHP_SELF']); ?>../index.php" class="admin-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div> -->
         </div>
     </nav>
 
@@ -271,10 +272,10 @@ $bookingCount = $bookingStmt->fetch(PDO::FETCH_ASSOC)['booking_count'];
             <a href="add_parking_spot.php" class="btn">Add New Parking Spot</a>
         </div>
 
-        <div class="user-management">
+        <!-- <div class="user-management">
             <h2>User Management</h2>
-            <!-- User management functionality can be added here -->
-        </div>
+            // User management functionality can be added here 
+        </div> -->
 
         <!-- Rest of your existing dashboard content -->
     </div>

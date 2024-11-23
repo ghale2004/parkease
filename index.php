@@ -45,22 +45,22 @@
 
     <!-- Nearby Parking Section -->
     <section class="nearby-parking">
-        <h2>Nearby Parking Spaces</h2>
-        <div class="parking-grid">
-            <div class="parking-card">
-                <img   src="https://parklio.com/assets/img/blog/100003/the-best-solution-for-parking-protection_1657283968214.jpg" alt="Parking Lot">
-                <div class="parking-info">
-                    <h3>Thamel Parking Complex</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> 0.5 km away</p>
-                    <p><i class="fas fa-car"></i> 15 spots available</p>
-                    <p><i class="fas fa-star"></i> 4.5/5 (120 reviews)</p>
-                    <p class="price">Rs. 60/hour</p>
-                    <button onclick="bookParking(1)" class="book-btn">Book Now</button>
-                </div>
+    <h2>Nearby Parking Spaces</h2>
+    <div class="parking-grid">
+        <div class="parking-card">
+            <img src="https://parklio.com/assets/img/blog/100003/the-best-solution-for-parking-protection_1657283968214.jpg" alt="Parking Lot">
+            <div class="parking-info">
+                <h3>Thamel Parking Complex</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 0.5 km away</p>
+                <p><i class="fas fa-car"></i> 15 spots available</p>
+                <p><i class="fas fa-star"></i> 4.5/5 (120 reviews)</p>
+                <p class="price">Rs. 60/hour</p>
+                <button onclick="bookParking(1, 'Thamel')" class="book-btn">Book Now</button>
             </div>
-            <!-- More parking cards... -->
         </div>
-    </section>
+        <!-- More parking cards... -->
+    </div>
+</section>
 
     <!-- How It Works -->
     <section class="how-it-works">
@@ -88,8 +88,11 @@
 
     <?php include 'includes/footer.php'; ?>
 
-   
-
+    <script>
+function bookParking(parkingId, location) {
+    window.location.href = `search.php?location=${encodeURIComponent(location)}`;
+}
+</script>
 
 
 

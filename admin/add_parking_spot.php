@@ -17,11 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $totalSpots = $_POST['total_spots'];
     $availableSpots = $_POST['total_spots']; // Initially, available spots equals total spots
     $pricePerHour = $_POST['price_per_hour'];
-    $rating = 0; // Default rating
+   // $rating = 0;  Default rating
+    $rating = $_POST['rating'];
     $reviewsCount = 0; // Default reviews count
 
     $stmt = $db->prepare("INSERT INTO parking_spots (name, location, total_spots, available_spots, price_per_hour, rating, reviews_count) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    
+
     if ($stmt->execute([$name, $location, $totalSpots, $availableSpots, $pricePerHour, $rating, $reviewsCount])) {
         $_SESSION['message'] = "Parking spot added successfully!";
         header('Location: dashboard.php');
@@ -34,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Add Parking Spot - ParkEase Nepal</title>
     <style>
@@ -79,7 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: 600;
         }
 
-        input, textarea {
+        input,
+        textarea {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid #ddd;
@@ -88,7 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             transition: border-color 0.3s ease;
         }
 
-        input:focus, textarea:focus {
+        input:focus,
+        textarea:focus {
             outline: none;
             border-color: #3498db;
             box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
@@ -130,6 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Add New Parking Spot</h2>
@@ -155,8 +160,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label>Price per Hour (Rs)</label>
                 <input type="number" name="price_per_hour" required min="0" step="0.01" placeholder="Enter price per hour">
             </div>
+            <div class="form-group">
+                <label for="rating">Rating (1-5):</label>
+                <input type="number" id="rating" name="rating" min="1" max="5" class="form-control" required  placeholder="Enter the rating">
+            </div>
+
+
             <button type="submit">Add Parking Spot</button>
         </form>
     </div>
 </body>
+
 </html>

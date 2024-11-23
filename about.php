@@ -145,7 +145,7 @@ include 'includes/header.php';
 
         <!-- Problem and Solution Section -->
         <section class="problem-solution">
-            <img src="/api/placeholder/500/400" alt="Parking Challenges in Kathmandu">
+            <img src="about-picture/pic3.jpg" alt="Parking Challenges in Kathmandu">
             <div class="problem-solution-content">
                 <h2>The Parking Predicament</h2>
                 <p>Kathmandu Valley faces an unprecedented parking crisis. With rapidly growing urbanization, limited parking infrastructure, and increasing vehicle ownership, finding a safe and convenient parking spot has become a daily struggle for residents and visitors alike.</p>

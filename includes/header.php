@@ -1,6 +1,6 @@
 <?php
-// includes/header.php
 session_start();
+// includes/header.php
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -192,14 +192,14 @@ session_start();
                 </a>
             <?php else: ?>
                 <!-- Regular User Menu Items -->
-                <a href="bookings.php">
+                <a href="my-bookings.php">
                     <i class="fas fa-calendar-alt"></i> My Bookings
                 </a>
             <?php endif; ?>
             <!-- Common Menu Items for Both User Types -->
-            <a href="profile.php">
+            <!-- <a href="profile.php">
                 <i class="fas fa-user-circle"></i> Profile
-            </a>
+            </a> -->
             <a href="auth/logout.php">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
