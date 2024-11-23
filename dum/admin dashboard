@@ -1,8 +1,9 @@
 <?php
-session_start();
+session_start(); // Comment this since header.php already has session_start()
 
 require_once('auth.php');
 require_once('../config/database.php');
+include('../includes/header.php'); 
 checkAdminAuth();
 
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
@@ -32,69 +33,12 @@ $bookingCount = $bookingStmt->fetch(PDO::FETCH_ASSOC)['booking_count'];
     <meta charset="UTF-8">
     <title>Admin Dashboard - ParkEase Nepal</title>
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-    /* Admin Navigation Styles */
-    .admin-nav {
-        background-color: #333;
-        padding: 1rem 0;
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 1000;
-    }
-
-    .nav-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-    }
-
-    .logo h1 {
-        color: #fff;
-        font-size: 1.5rem;
-        margin: 0;
-    }
-
-    .nav-links {
-        display: flex;
-        align-items: center;
-    }
-
-    .nav-links a {
-        color: #fff;
-        text-decoration: none;
-        margin: 0 15px;
-        padding: 8px 15px;
-        border-radius: 4px;
-        transition: background-color 0.3s;
-    }
-
-    .nav-links a:hover {
-        background-color: #444;
-    }
-
-    .admin-logout {
-        background-color: #ffd700;
-        color: #333 !important;
-        padding: 8px 15px;
-        border-radius: 4px;
-        transition: background-color 0.3s;
-    }
-
-    .admin-logout:hover {
-        background-color: #e6c200;
-    }
-
-    /* Rest of your existing dashboard styles */
+    /* Admin Dashboard specific styles */
     .admin-dashboard {
         padding: 20px;
         max-width: 1200px;
-        margin: 80px auto 0;
+        margin: 80px auto 0; /* Added top margin to account for fixed nav */
     }
 
     .dashboard-stats {
@@ -200,28 +144,11 @@ $bookingCount = $bookingStmt->fetch(PDO::FETCH_ASSOC)['booking_count'];
             white-space: nowrap;
         }
     }
-    /* Your existing styles remain the same */
     </style>
 </head>
 <body>
-    <!-- Admin Navigation -->
-    <nav class="admin-nav">
-        <div class="nav-container">
-            <div class="logo">
-                <h1>ParkEase Nepal - Admin</h1>
-            </div>
-            <div class="nav-links">
-                <a href="../index.php"><i class="fas fa-home"></i> Main Site</a>
-                <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                <a href="manage-users.php"><i class="fas fa-users"></i> Users</a>
-                <a href="manage-parking.php"><i class="fas fa-parking"></i> Parking</a>
-                <a href="profile.php"><i class="fas fa-user-circle"></i> Profile</a>
-                <a href="logout.php" class="admin-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Rest of your dashboard content remains the same -->
+  
     <div class="admin-dashboard">
         <h1>Admin Dashboard</h1>
         
@@ -239,6 +166,7 @@ $bookingCount = $bookingStmt->fetch(PDO::FETCH_ASSOC)['booking_count'];
                 <p><?php echo $bookingCount; ?></p>
             </div>
         </div>
+
         <div class="parking-management">
             <h2>Parking Spots Management</h2>
             <table>
@@ -272,11 +200,9 @@ $bookingCount = $bookingStmt->fetch(PDO::FETCH_ASSOC)['booking_count'];
         </div>
 
         <div class="user-management">
-            <h2>User Management</h2>
+            <!-- <h2>User Management</h2>
             <!-- User management functionality can be added here -->
-        </div>
-
-        <!-- Rest of your existing dashboard content -->
+        </div> -->
     </div>
 </body>
 </html>

@@ -167,47 +167,48 @@ session_start();
             <a href="about.php">About</a>
             <a href="contact.php">Contact</a>
 
-            <?php if(isset($_SESSION['user_name'])): ?>
-                <div class="user-profile-menu">
-                    <div class="user-greeting">
-                        <i class="fas fa-user"></i>
-                        <span><?php echo htmlspecialchars($_SESSION['user_name']); ?></span>
-                        <?php if(isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                            <span class="admin-badge">Admin</span>
-                        <?php endif; ?>
-                        <i class="fas fa-caret-down" style="margin-left: 5px;"></i>
-                    </div>
-                    <div class="user-dropdown">
-                        <?php if(isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                            <!-- Admin Menu Items -->
-                            <a href="admin/dashboard.php">
-                                <i class="fas fa-tachometer-alt"></i> Admin Dashboard       
-                            </a>
-                            <a href="admin/manage-users.php">
-                                <i class="fas fa-users"></i> Manage Users
-                            </a>
-                            <a href="admin/manage-parking.php">
-                                <i class="fas fa-parking"></i> Manage Parking
-                            </a>
-                        <?php else: ?>
-                            <!-- Regular User Menu Items -->
-                            <a href="bookings.php">
-                                <i class="fas fa-calendar-alt"></i> My Bookings
-                            </a>
-                        <?php endif; ?>
-                        <!-- Common Menu Items for Both User Types -->
-                        <a href="profile.php">
-                            <i class="fas fa-user-circle"></i> Profile
-                        </a>
-                        <a href="auth/logout.php">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                    </div>
-                </div>
-            <?php else: ?>
-                <a href="#" onclick="openAuthPopup('login')" class="login-btn">Login</a>
-                <a href="#" onclick="openAuthPopup('register')" class="register-btn">Register</a>
+            <!-- Find this section in header.php -->
+<?php if(isset($_SESSION['user_name'])): ?>
+    <div class="user-profile-menu">
+        <div class="user-greeting">
+            <i class="fas fa-user"></i>
+            <span><?php echo htmlspecialchars($_SESSION['user_name']); ?></span>
+            <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                <!-- <span class="admin-badge">Admin</span> -->
             <?php endif; ?>
+            <i class="fas fa-caret-down" style="margin-left: 5px;"></i>
+        </div>
+        <div class="user-dropdown">
+            <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                <!-- Admin Menu Items -->
+                <a href="admin/dashboard.php">
+                    <i class="fas fa-tachometer-alt"></i> Admin Dashboard       
+                </a>
+                <a href="admin/manage-users.php">
+                    <i class="fas fa-users"></i> Manage Users
+                </a>
+                <a href="admin/manage-parking.php">
+                    <i class="fas fa-parking"></i> Manage Parking
+                </a>
+            <?php else: ?>
+                <!-- Regular User Menu Items -->
+                <a href="bookings.php">
+                    <i class="fas fa-calendar-alt"></i> My Bookings
+                </a>
+            <?php endif; ?>
+            <!-- Common Menu Items for Both User Types -->
+            <a href="profile.php">
+                <i class="fas fa-user-circle"></i> Profile
+            </a>
+            <a href="auth/logout.php">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+<?php else: ?>
+    <a href="#" onclick="openAuthPopup('login')" class="login-btn">Login</a>
+    <a href="#" onclick="openAuthPopup('register')" class="register-btn">Register</a>
+<?php endif; ?>
         </div>
     </div>
 </nav>
