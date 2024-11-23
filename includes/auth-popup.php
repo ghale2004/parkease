@@ -288,14 +288,29 @@
         let isValid = true;
 
         // Name validation
+        // const name = document.getElementById('registerName');
+        // const nameError = document.getElementById('registerNameError');
+        // if (name.value.length < 2) {
+        //     nameError.textContent = 'Please enter your full name';
+        //     isValid = false;
+        // } else {
+        //     nameError.textContent = '';
+        // }
+
         const name = document.getElementById('registerName');
         const nameError = document.getElementById('registerNameError');
+        const nameRegex = /^[A-Za-z\s]+$/; // Allows only letters and spaces
+
         if (name.value.length < 2) {
             nameError.textContent = 'Please enter your full name';
+            isValid = false;
+        } else if (!nameRegex.test(name.value)) {
+            nameError.textContent = 'Name must contain only letters and spaces';
             isValid = false;
         } else {
             nameError.textContent = '';
         }
+
 
         // Email validation
         const email = document.getElementById('registerEmail');
@@ -357,76 +372,76 @@
     }
 
     // API Calls
-    
+
     async function submitLogin(formData) {
-    try {
-        const loginType = formData.get('loginType'); // user or admin
-        const endpoint = loginType === 'admin' ? 'admin/login.php' : 'auth/login.php';
+        try {
+            const loginType = formData.get('loginType'); // user or admin
+            const endpoint = loginType === 'admin' ? 'admin/login.php' : 'auth/login.php';
 
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: formData.get('email'),
-                password: formData.get('password')
-            }),
-        });
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: formData.get('email'),
+                    password: formData.get('password')
+                }),
+            });
 
-        const data = await response.json();
-        if (data.success) {
-            if (data.redirect) {
-                window.location.href = data.redirect;
+            const data = await response.json();
+            if (data.success) {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                    window.location.reload();
+                }
             } else {
-                window.location.reload();
+                alert(data.message || 'Login failed. Please try again.');
             }
-        } else {
-            alert(data.message || 'Login failed. Please try again.');
+        } catch (error) {
+            console.error('Login error:', error);
+            alert('An error occurred. Please try again.');
         }
-    } catch (error) {
-        console.error('Login error:', error);
-        alert('An error occurred. Please try again.');
     }
-}
 
 
     async function submitRegistration(formData) {
-    try {
-        const response = await fetch('auth/register.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: formData.get('name'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                password: formData.get('password')
-            })
-        });
+        try {
+            const response = await fetch('auth/register.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    password: formData.get('password')
+                })
+            });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
-            const data = await response.json();
-            if (data.success) {
-                alert('Registration successful! Please login.');
-                toggleAuthForms();
-            } else {
-                alert(data.message || 'Registration failed. Please try again.');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        } else {
-            const text = await response.text();
-            console.error('Non-JSON response:', text);
-            alert('Unexpected server response.');
+
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                const data = await response.json();
+                if (data.success) {
+                    alert('Registration successful! Please login.');
+                    toggleAuthForms();
+                } else {
+                    alert(data.message || 'Registration failed. Please try again.');
+                }
+            } else {
+                const text = await response.text();
+                console.error('Non-JSON response:', text);
+                alert('Unexpected server response.');
+            }
+        } catch (error) {
+            console.error('Registration error:', error);
+            alert('An error occurred. Please try again.');
         }
-    } catch (error) {
-        console.error('Registration error:', error);
-        alert('An error occurred. Please try again.');
     }
-}
 </script>
