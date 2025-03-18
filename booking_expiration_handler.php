@@ -1,8 +1,77 @@
 <?php
-// session_start();
-include 'includes/header.php';
 
-ob_start(); // Start output buffering
+ ob_start(); // Start output buffering
+include 'includes/header.php';
+include 'config/database.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../auth/login.php");
+   exit();
+}
+
+// Get user details for pre-filling the form
+$user_id = $_SESSION['user_id'];
+$conn = new mysqli("localhost", "nbezprep_parkease", "sujit0110", "nbezprep_parkease");
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$stmt = $conn->prepare("SELECT user_name, email FROM users WHERE id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+$stmt->close();
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = trim($_POST['user_name']);
+    $email = trim($_POST['email']);
+    $subject = trim($_POST['subject']);
+    $message = trim($_POST['message']);
+
+    $errors = [];
+
+    // Validate inputs
+    if (empty($name)) {
+        $errors[] = "Name is required";
+    }
+
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Valid email is required";
+    }
+
+    if (empty($subject)) {
+        $errors[] = "Subject is required";
+    }
+
+    if (empty($message)) {
+        $errors[] = "Message is required";
+    }
+
+    // Verify email matches logged-in user
+    if ($email !== $user['email']) {
+        $errors[] = "Email must match your registered email address";
+    }
+
+    // If no errors, process the form
+    if (empty($errors)) {
+        $sql = "INSERT INTO contact_requests (user_id, name, email, subject, message) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("issss", $user_id, $name, $email, $subject, $message);
+
+        if ($stmt->execute()) {
+            echo '<div class="message success-message">Thank you for your message. We will get back to you soon!</div>';
+            $_POST = array();
+        } else {
+            echo '<div class="message error-message">Error: Could not save your request. Please try again later.</div>';
+        }
+        $stmt->close();
+    } else {
+        echo '<div class="message error-message">' . implode('<br>', $errors) . '</div>';
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -170,107 +239,45 @@ ob_start(); // Start output buffering
 
 <body>
 
-    <?php include 'config/database.php'; ?>
+    
 
     <div class="contact-container">
         <!-- Contact Form -->
         <div class="contact-form">
             <h2>Contact ParkEase</h2>
+              <?php if (isset($_SESSION['user_id'])): ?>
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required 
+                               value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : htmlspecialchars($user['name']); ?>" readonly>
+                    </div>
 
-            <?php
-            // Handle form submission
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                // Basic validation
-                $name = trim($_POST['name']);
-                $email = trim($_POST['email']);
-                $subject = trim($_POST['subject']);
-                $message = trim($_POST['message']);
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required 
+                               value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : htmlspecialchars($user['email']); ?>" readonly>
+                    </div>
 
-                $errors = [];
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required
+                               value="<?php echo isset($_POST['subject']) ? htmlspecialchars($_POST['subject']) : ''; ?>">
+                    </div>
 
-                // Validate inputs
-                if (empty($name)) {
-                    $errors[] = "Name is required";
-                }
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" required><?php echo isset($_POST['message']) ? htmlspecialchars($_POST['message']) : ''; ?></textarea>
+                    </div>
 
-                if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    $errors[] = "Valid email is required";
-                }
-
-                if (empty($subject)) {
-                    $errors[] = "Subject is required";
-                }
-
-                if (empty($message)) {
-                    $errors[] = "Message is required";
-                }
-
-                // If no errors, process the form
-                if (empty($errors)) {
-                    // Create a database connection
-                    $conn = new mysqli("localhost", "nbezprep_parkease", "sujit0110", "nbezprep_parkease");
-
-                    // Check connection
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
-
-                    // Prepare the SQL query
-                    $sql = "INSERT INTO contact_requests (name, email, subject, message) VALUES (?, ?, ?, ?)";
-
-                    // Use prepared statements to prevent SQL injection
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("ssss", $name, $email, $subject, $message);
-
-                    // Execute the query
-                    if ($stmt->execute()) {
-                        echo '<div class="message success-message">Thank you for your message. We will get back to you soon!</div>';
-
-                        // Clear POST data to empty form fields
-                        $_POST = array();
-                    } else {
-                        echo '<div class="message error-message">Error: Could not save your request. Please try again later.</div>';
-                    }
-
-                    // Close the statement and connection
-                    $stmt->close();
-                    $conn->close();
-                } else {
-                    // Display errors
-                    echo '<div class="message error-message">' . implode('<br>', $errors) . '</div>';
-                }
-            }
-            ?>
-
-
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" required
-                        value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>">
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            <?php else: ?>
+                <div class="message error-message">
+                    Please <a href="login.php">login</a> to submit a contact request.
                 </div>
-
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required
-                        value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
-                </div>
-
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" required
-                        value="<?php echo isset($_POST['subject']) ? htmlspecialchars($_POST['subject']) : ''; ?>">
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Your Message</label>
-                    <textarea id="message" name="message" required><?php
-                                                                    echo isset($_POST['message']) ? htmlspecialchars($_POST['message']) : '';
-                                                                    ?></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn">Send Message</button>
-            </form>
+            <?php endif; ?>
+            
         </div>
 
         <!-- Contact Information -->

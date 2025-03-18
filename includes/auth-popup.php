@@ -367,7 +367,8 @@
     }
 
     function validatePhone(phone) {
-        const re = /^[0-9]{10}$/;
+        // const re = /^[0-9]{10}$/; 
+        const re = /^(98|97)[0-9]{8}$/;
         return re.test(phone);
     }
 

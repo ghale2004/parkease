@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ParkEase Nepal - Find Your Parking Space</title>
+    <link rel="icon" type="image/x-icon" href="/about-picture/park.svg">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -67,17 +68,21 @@
         <h2>How It Works</h2>
         <div class="steps-container">
             <div class="step">
-                <i class="fas fa-search"></i>
+            <a href = 'search.php' class = "deco" >
+                <i class="fas fa-search"></i>  </a>
                 <h3>Search</h3>
                 <p>Find parking spots near your destination</p>
+               
             </div>
             <div class="step">
-                <i class="fas fa-calendar-check"></i>
+            <a href = 'search.php' class = "deco">
+                <i class="fas fa-calendar-check"></i>  </a>
                 <h3>Book</h3>
                 <p>Reserve your spot in advance</p>
             </div>
             <div class="step">
-                <i class="fas fa-parking"></i>
+            <a href = 'my-bookings.php'>
+                <i class="fas fa-parking"></i></a>
                 <h3>Park</h3>
                 <p>Show your booking code and park safely</p>
             </div>

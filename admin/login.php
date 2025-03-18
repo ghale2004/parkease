@@ -85,7 +85,8 @@ try {
     echo json_encode([
         'success' => true,
         'message' => 'Admin login successful',
-        'redirect' => '../demopopup/admin/dashboard.php'
+        'redirect' => '/index.php'
+        // 'redirect' => '../demopopup/admin/dashboard.php'
     ]);
 
 } catch (PDOException $e) {

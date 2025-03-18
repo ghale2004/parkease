@@ -1,6 +1,14 @@
 <?php
 session_start();
 // includes/header.php
+
+// Add expiration check
+// $last_update = isset($_SESSION['last_spot_update']) ? $_SESSION['last_spot_update'] : 0;
+// if (time() - $last_update >= 18000) { // 900 seconds = 15 minutes
+//     include dirname(__DIR__) . '/booking_expiration_handler.php'; // Use parent directory path
+//     $_SESSION['last_spot_update'] = time();
+// }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -187,7 +195,7 @@ session_start();
                 <a href="admin/manage-users.php">
                     <i class="fas fa-users"></i> Manage Users
                 </a>
-                <a href="admin/manage-parking.php">
+                <a href="admin/manage_parking_spots.php">
                     <i class="fas fa-parking"></i> Manage Parking
                 </a>
             <?php else: ?>

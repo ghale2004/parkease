@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Database connection
-$conn = new mysqli("localhost", "root", "", "parkease");
+$conn = new mysqli("localhost", "nbezprep_parkease", "sujit0110", "nbezprep_parkease");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             SELECT COUNT(*) as count 
             FROM bookings 
             WHERE parking_spot_id = ? 
-            AND status = 'active'
+            AND status IN ('pending', 'confirmed')
             AND ((start_time BETWEEN ? AND ?) 
             OR (end_time BETWEEN ? AND ?))
         ");
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Insert the booking
             $stmt = $conn->prepare("
                 INSERT INTO bookings (user_id, parking_spot_id, user_name, name, start_time, end_time, total_price, status, created_at) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, 'active', NOW())
+                VALUES (?, ?, ?, ?, ?, ?, ?,'confirmed', NOW())
             ");
             
             if ($stmt === false) {

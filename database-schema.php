@@ -49,7 +49,7 @@ if ($conn->query($sql) === TRUE) {
         start_time DATETIME NOT NULL,
         end_time DATETIME NOT NULL,
         total_price DECIMAL(10,2) NOT NULL,
-        status ENUM('pending', 'confirmed', 'completed', 'cancelled') DEFAULT 'pending',
+        status ENUM('pending', 'confirmed', 'completed', 'cancelled', ) DEFAULT 'pending',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id),
         FOREIGN KEY (parking_spot_id) REFERENCES parking_spots(id)

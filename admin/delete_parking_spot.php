@@ -20,7 +20,7 @@ $db = $database->getConnection();
 
 try {
     // First check if the parking spot exists and if it has any active bookings
-    $checkBookings = $db->prepare("SELECT COUNT(*) FROM bookings WHERE parking_spot_id = ? AND status = 'active'");
+    $checkBookings = $db->prepare("SELECT COUNT(*) FROM bookings WHERE parking_spot_id = ? AND status = 'confirmed'");
     $checkBookings->execute([$_GET['id']]);
     $activeBookings = $checkBookings->fetchColumn();
 

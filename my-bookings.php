@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Database connection
-$conn = new mysqli("localhost", "root", "", "parkease");
+$conn = new mysqli("localhost", "nbezprep_parkease", "sujit0110", "nbezprep_parkease");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -26,7 +26,7 @@ if (isset($_POST['cancel_booking']) && isset($_POST['booking_id'])) {
         $check_stmt = $conn->prepare("
             SELECT parking_spot_id, start_time 
             FROM bookings 
-            WHERE id = ? AND user_id = ? AND status = 'active'
+            WHERE id = ? AND user_id = ? AND status = 'confirmed'
             AND start_time > NOW()
         ");
         $check_stmt->bind_param("ii", $booking_id, $_SESSION['user_id']);
@@ -283,7 +283,7 @@ $bookings = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                                 <p><i class="fas fa-money-bill"></i> Rs. <?php echo number_format($booking['total_price'], 2); ?></p>
                             </div>
 
-                            <?php if ($booking['status'] === 'active' && $start > $now): ?>
+                            <?php if ($booking['status'] === 'confirmed' && $start > $now): ?>
                                 <div class="booking-actions">
                                     <form method="POST" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
                                         <input type="hidden" name="booking_id" value="<?php echo $booking['id']; ?>">

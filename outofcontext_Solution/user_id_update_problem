@@ -1,0 +1,7 @@
+Reset auto-increment:
+ALTER TABLE users AUTO_INCREMENT = 1;
+
+If gaps still appear, add this after deleting records
+SET @count = 0;
+UPDATE users SET id = @count:= @count + 1;
+ALTER TABLE users AUTO_INCREMENT = 1;

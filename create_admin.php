@@ -2,9 +2,15 @@
 require_once('config/database.php');
 
 // Admin credentials
-$admin_name = "Admin User";
-$admin_email = "ghalepaat@gmail.com";
-$admin_password = "ghale0110";
+// $admin_name = "Admin";
+// $admin_email = "ghalepaat@gmail.com";
+// $admin_password = "ghale0110";
+
+// Admin credentials
+ $admin_name = "Admin";
+ $admin_email = "bipul@gmail.com";
+ $admin_password = "bipul12345";
+
 
 try {
     $database = new Database();

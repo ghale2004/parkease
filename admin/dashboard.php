@@ -212,9 +212,9 @@ $bookingCount = $bookingStmt->fetch(PDO::FETCH_ASSOC)['booking_count'];
             </div>
             <div class="nav-links">
                 <a href="../index.php"><i class="fas fa-home"></i> Main Site</a>
-                <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                <a href="manage-users.php"><i class="fas fa-users"></i> Users</a>
-                <a href="manage-parking.php"><i class="fas fa-parking"></i> Parking</a>
+                <!-- <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a> -->
+                <!-- <a href="manage-users.php"><i class="fas fa-users"></i> Users</a> -->
+                <!-- <a href="manage-parking.php"><i class="fas fa-parking"></i> Parking</a> -->
                 <!-- <a href="profile.php"><i class="fas fa-user-circle"></i> Profile</a> -->
                 <a href="logout.php" class="admin-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 <!-- <a href="<?php echo dirname($_SERVER['PHP_SELF']); ?>../index.php" class="admin-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -232,12 +232,15 @@ $bookingCount = $bookingStmt->fetch(PDO::FETCH_ASSOC)['booking_count'];
                 <p><?php echo count($parkingSpots); ?></p>
             </div>
             <div class="stat-card">
-                <h3>Total Users</h3>
+                <a href= "view_users.php" style="text-decoration: none; color: inherit;"
+>                <h3>Total Users</h3>
                 <p><?php echo $userCount; ?></p>
+                </a>
             </div>
             <div class="stat-card">
+            <a href = "total_booking.php" style = "text-decoration: none; color: inherit;"
                 <h3>Total Bookings</h3>
-                <p><?php echo $bookingCount; ?></p>
+                <p><?php echo $bookingCount; ?></p> </a>
             </div>
         </div>
         <div class="parking-management">

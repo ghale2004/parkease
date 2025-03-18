@@ -3,9 +3,9 @@
 
 class Database {
     private $host = "localhost";
-    private $db_name = "parkease";
-    private $username = "root";
-    private $password = "";
+    private $db_name = "nbezprep_parkease";
+    private $username = "nbezprep_parkease";
+    private $password = "sujit0110";
     public $conn;
 
     public function getConnection() {
